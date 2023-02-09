@@ -274,6 +274,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3aa8b13e640fb4a87ca1bc4de73734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sizeMainArea: 0a0000000a000000
+  sizeBorderSideArea: 2
+  mainAreaGroundPrefabs:
+  - {fileID: 2356827027956435379, guid: bfce98123350069469a21eb9424cc397, type: 3}
+  - {fileID: 7383350814513878396, guid: fc140b69eb7b1e74ab7b454502f4a153, type: 3}
+  mainAreaCoverPrefabs: []
+  sideAreaGroundPrefabs: []
+  sideAreaCoverPrefabs: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,11 +6,16 @@ public class MapGenerator : MonoBehaviour
 {
     [SerializeField]
     private int[] sizeMainArea;
+    [SerializeField]
+    private int sizeBorderSideArea;
 
+    // All gameobjects for the main area and the side area of the game.
+    // To find gameobjects related to a specific kingdom, check if the gameobject's name contains the kingdom's name.
     [SerializeField]
-    private GameObject[] mainAreaGroundPrefabs;
+    private GameObject[] groundPrefabs;
     [SerializeField]
-    private GameObject[] sideAreaGroundPrefabs;
+    private GameObject[] coverPrefabs;
+
 
     void Start()
     {
@@ -23,7 +28,25 @@ public class MapGenerator : MonoBehaviour
     public void GenerateMap()
     {
         Debug.Log("Hello GenerateMap");
+        GenerateMainArea();
+        GenerateSideArea();
+
+        List<GameObject> listGroundKingdom = new List<GameObject>();
+        listGroundKingdom = GetGroundKingdomPrefabs("Geir");
+
+        Debug.Log("->" + gameObject.name.Contains("mema"));
+    }
+
+
+    // Main Area.
+
+    /// <summary>
+    /// Generate the main area.
+    /// </summary>
+    private void GenerateMainArea()
+    {
         GenerateMainAreaGround();
+        GenerateMainAreaCover();
     }
 
     /// <summary>
@@ -35,10 +58,55 @@ public class MapGenerator : MonoBehaviour
     }
 
     /// <summary>
+    /// Generate objects and vegetation on the main area.
+    /// </summary>
+    private void GenerateMainAreaCover()
+    {
+
+    }
+
+
+
+    // Side Area.
+
+    /// <summary>
+    /// Generate the side area.
+    /// </summary>
+    private void GenerateSideArea()
+    {
+        GenerateSideAreaGround();
+        GenerateSideAreaCover();
+    }
+
+    /// <summary>
     /// Generate the ground for the side area.
     /// </summary>
     private void GenerateSideAreaGround()
     {
 
+    }
+
+    /// <summary>
+    /// Generate objects and vegetation on the side area.
+    /// </summary>
+    private void GenerateSideAreaCover()
+    {
+
+    }
+
+
+
+    // Kingdoms relations.
+
+    private List<GameObject> GetGroundKingdomPrefabs(string kingdomPattern)
+    {
+        List<GameObject> listPrefabs = new List<GameObject>();
+        return listPrefabs;
+    }
+
+    private List<GameObject> GetCoverKingdomPrefabs(string kingdomPattern)
+    {
+        List<GameObject> listPrefabs = new List<GameObject>();
+        return listPrefabs;
     }
 }
