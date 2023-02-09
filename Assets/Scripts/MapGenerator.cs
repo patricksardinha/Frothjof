@@ -9,6 +9,9 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private int sizeBorderSideArea;
 
+    [SerializeField]
+    private Transform mainGroundContainer;
+
     // All gameobjects for the main area and the side area of the game.
     // To find gameobjects related to a specific kingdom, check if the gameobject's name contains the kingdom's name.
     [SerializeField]
@@ -16,6 +19,11 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private GameObject[] coverPrefabs;
 
+    private List<GameObject> currentGround = new List<GameObject>();
+    private List<GameObject> currentCover = new List<GameObject>();
+
+    private List<GameObject> listGroundKingdom = new List<GameObject>();
+    private List<GameObject> listCoverKingdom = new List<GameObject>();
 
     void Start()
     {
@@ -28,9 +36,6 @@ public class MapGenerator : MonoBehaviour
     public void GenerateMap(string kingdomName)
     {
         Debug.Log("Hello GenerateMap");
-
-        List<GameObject> listCoverKingdom = new List<GameObject>();
-        List<GameObject> listGroundKingdom = new List<GameObject>();
 
         listGroundKingdom = GetGroundKingdomPrefabs(kingdomName);
         listCoverKingdom = GetCoverKingdomPrefabs(kingdomName);
@@ -60,7 +65,18 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     private void GenerateMainAreaGround()
     {
+        for (int x = 0; x < sizeMainArea[0]; x++)
+        {
+            for (int z = 0; z < sizeMainArea[1]; z++)
+            {
+                GameObject block = listGroundKingdom[Random.Range(0, listGroundKingdom.Count)];
+                currentGround.Add(block);
+                Vector3 blockPosition = new Vector3(x, 0, z);
 
+                Instantiate(block, blockPosition, Quaternion.identity, mainGroundContainer);
+                block.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
