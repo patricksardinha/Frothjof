@@ -25,16 +25,18 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Generate the main and the side area of the map.
     /// </summary>
-    public void GenerateMap()
+    public void GenerateMap(string kingdomName)
     {
         Debug.Log("Hello GenerateMap");
+
+        List<GameObject> listCoverKingdom = new List<GameObject>();
+        List<GameObject> listGroundKingdom = new List<GameObject>();
+
+        listGroundKingdom = GetGroundKingdomPrefabs(kingdomName);
+        listCoverKingdom = GetCoverKingdomPrefabs(kingdomName);
+
         GenerateMainArea();
         GenerateSideArea();
-
-        List<GameObject> listGroundKingdom = new List<GameObject>();
-        listGroundKingdom = GetGroundKingdomPrefabs("Geir");
-
-        Debug.Log("->" + gameObject.name.Contains("mema"));
     }
 
 
@@ -45,8 +47,12 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     private void GenerateMainArea()
     {
+        // Gameobjects generation.
         GenerateMainAreaGround();
         GenerateMainAreaCover();
+
+        // Animations display.
+        EntranceAnimation();
     }
 
     /// <summary>
@@ -66,6 +72,12 @@ public class MapGenerator : MonoBehaviour
     }
 
 
+    private void ClearMainArea()
+    {
+
+    }
+
+
 
     // Side Area.
 
@@ -76,6 +88,8 @@ public class MapGenerator : MonoBehaviour
     {
         GenerateSideAreaGround();
         GenerateSideAreaCover();
+
+        EntranceAnimation();
     }
 
     /// <summary>
@@ -96,17 +110,59 @@ public class MapGenerator : MonoBehaviour
 
 
 
+    // Animations
+
+    private void EntranceAnimation()
+    {
+
+    }
+
+    private void ExitAnimation()
+    {
+
+    }
+
+
     // Kingdoms relations.
 
+    /// <summary>
+    /// Get all ground prefabs related to the kingdom passed as argument.
+    /// </summary>
+    /// <param name="kingdomPattern">The kingdom name pattern.</param>
+    /// <returns></returns>
     private List<GameObject> GetGroundKingdomPrefabs(string kingdomPattern)
     {
         List<GameObject> listPrefabs = new List<GameObject>();
+
+        foreach (GameObject groundPrefab in groundPrefabs)
+        {
+            if (groundPrefab.name.Contains(kingdomPattern))
+            {
+                listPrefabs.Add(groundPrefab);
+            }
+        }
+
         return listPrefabs;
     }
 
+
+    /// <summary>
+    /// Get all cover prefabs related to the kingdom passed as argument.
+    /// </summary>
+    /// <param name="kingdomPattern">The kingdom name pattern.</param>
+    /// <returns></returns>
     private List<GameObject> GetCoverKingdomPrefabs(string kingdomPattern)
     {
         List<GameObject> listPrefabs = new List<GameObject>();
+
+        foreach (GameObject coverPrefab in coverPrefabs)
+        {
+            if (coverPrefab.name.Contains(kingdomPattern))
+            {
+                listPrefabs.Add(coverPrefab);
+            }
+        }
+
         return listPrefabs;
     }
 }

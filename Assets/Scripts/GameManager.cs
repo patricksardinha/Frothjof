@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
 
     void StartGame()
     {
-        mapGeneratorScript.GenerateMap();
+        string currentKingdom = "Geir";
+        mapGeneratorScript.GenerateMap(currentKingdom);
     }
 
 }
