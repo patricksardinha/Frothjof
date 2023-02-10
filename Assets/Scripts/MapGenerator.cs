@@ -25,6 +25,10 @@ public class MapGenerator : MonoBehaviour
     private List<GameObject> listGroundKingdom = new List<GameObject>();
     private List<GameObject> listCoverKingdom = new List<GameObject>();
 
+    // Animation flags.
+    public bool playEntranceAnim = false;
+    public bool playExitAnim = false;
+
     void Start()
     {
         Debug.Log("Hello map gen");
@@ -65,18 +69,25 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     private void GenerateMainAreaGround()
     {
+        float offsetAnimation = 1.0f;
+
         for (int x = 0; x < sizeMainArea[0]; x++)
         {
             for (int z = 0; z < sizeMainArea[1]; z++)
             {
                 GameObject block = listGroundKingdom[Random.Range(0, listGroundKingdom.Count)];
                 currentGround.Add(block);
-                Vector3 blockPosition = new Vector3(x, 0, z);
+                Vector3 blockPosition = new Vector3(x, offsetAnimation, z);
 
                 Instantiate(block, blockPosition, Quaternion.identity, mainGroundContainer);
                 block.SetActive(false);
             }
         }
+
+        // TODO: startcoroutine setactive as true blocks randomly every x ms
+
+        // [BlockAnimations.cs]
+        playEntranceAnim = true;
     }
 
     /// <summary>

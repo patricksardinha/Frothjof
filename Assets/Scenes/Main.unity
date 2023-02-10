@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 722339730}
   - component: {fileID: 722339729}
   - component: {fileID: 722339731}
+  - component: {fileID: 722339732}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -312,6 +313,20 @@ MonoBehaviour:
   - {fileID: 2356827027956435379, guid: bfce98123350069469a21eb9424cc397, type: 3}
   - {fileID: 7383350814513878396, guid: fc140b69eb7b1e74ab7b454502f4a153, type: 3}
   coverPrefabs: []
+  playEntranceAnim: 0
+  playExitAnim: 0
+--- !u!114 &722339732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722339728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21862a08312bf5a458e75889acd7dda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
