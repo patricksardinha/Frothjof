@@ -313,6 +313,8 @@ MonoBehaviour:
   - {fileID: 2356827027956435379, guid: bfce98123350069469a21eb9424cc397, type: 3}
   - {fileID: 7383350814513878396, guid: fc140b69eb7b1e74ab7b454502f4a153, type: 3}
   coverPrefabs: []
+  currentGround: []
+  currentCover: []
   playEntranceAnim: 0
   playExitAnim: 0
 --- !u!114 &722339732

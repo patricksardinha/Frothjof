@@ -19,19 +19,30 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private GameObject[] coverPrefabs;
 
-    private List<GameObject> currentGround = new List<GameObject>();
-    private List<GameObject> currentCover = new List<GameObject>();
-
     private List<GameObject> listGroundKingdom = new List<GameObject>();
     private List<GameObject> listCoverKingdom = new List<GameObject>();
 
-    // Animation flags.
+    public List<GameObject> currentGround = new List<GameObject>();
+    public List<GameObject> currentCover = new List<GameObject>();
+
+    // Animations.
     public bool playEntranceAnim = false;
     public bool playExitAnim = false;
+    private float displayDelay = 2.0f;
+
 
     void Start()
     {
         Debug.Log("Hello map gen");
+    }
+
+    private void Update()
+    {
+        foreach (Transform go in mainGroundContainer.GetComponentsInChildren<Transform>(true))
+        {
+            go.transform.position = new Vector3(0,1*Time.deltaTime,0);
+            Debug.Log(go.transform.position);
+        }
     }
 
     /// <summary>
@@ -46,6 +57,13 @@ public class MapGenerator : MonoBehaviour
 
         GenerateMainArea();
         GenerateSideArea();
+
+        // Animations display.
+        EntranceAnimation(currentGround);
+
+        Debug.Log("0");
+        // Wait for currentGround
+        //EntranceAnimation(currentCover);
     }
 
 
@@ -59,9 +77,6 @@ public class MapGenerator : MonoBehaviour
         // Gameobjects generation.
         GenerateMainAreaGround();
         GenerateMainAreaCover();
-
-        // Animations display.
-        EntranceAnimation();
     }
 
     /// <summary>
@@ -80,14 +95,10 @@ public class MapGenerator : MonoBehaviour
                 Vector3 blockPosition = new Vector3(x, offsetAnimation, z);
 
                 Instantiate(block, blockPosition, Quaternion.identity, mainGroundContainer);
-                block.SetActive(false);
+                block.SetActive(true);
             }
         }
-
-        // TODO: startcoroutine setactive as true blocks randomly every x ms
-
-        // [BlockAnimations.cs]
-        playEntranceAnim = true;
+        Debug.Log("1");
     }
 
     /// <summary>
@@ -115,8 +126,6 @@ public class MapGenerator : MonoBehaviour
     {
         GenerateSideAreaGround();
         GenerateSideAreaCover();
-
-        EntranceAnimation();
     }
 
     /// <summary>
@@ -139,8 +148,14 @@ public class MapGenerator : MonoBehaviour
 
     // Animations
 
-    private void EntranceAnimation()
+    private void EntranceAnimation(List<GameObject> listGo)
     {
+        Debug.Log("2");
+        // [BlockAnimations.cs]
+        playEntranceAnim = true;
+
+        // TODO: startcoroutine setactive as true blocks randomly every x ms
+        WaitAndDisplayRandom(listGo);
 
     }
 
@@ -148,6 +163,46 @@ public class MapGenerator : MonoBehaviour
     {
 
     }
+
+
+    /// <summary>
+    /// Display randomly gameobjects in the input list with a short delay between each display.
+    /// </summary>
+    /// <param name="layer">The list of gameobjects.</param>
+    /// <returns>Yield with delay.</returns>
+    private void WaitAndDisplayRandom(List<GameObject> listGameobjects)
+    {
+
+        List<GameObject> listGameobjectsShuffled = ShuffleGameobjects(listGameobjects);
+
+        Debug.Log("3");
+        foreach (GameObject go in listGameobjectsShuffled)
+        {
+            //yield return new WaitForSeconds(0);
+            go.SetActive(true);
+            Debug.Log("-> " + go.activeInHierarchy + ": " + go.name);
+        }
+        Debug.Log("4");
+    }
+
+
+    /// <summary>
+    /// Shuffle a list of gameobjects.
+    /// </summary>
+    /// <param name="listGo">The initial list of gameobjects.</param>
+    /// <returns>The list randomly shuffled.</returns>
+    private List<GameObject> ShuffleGameobjects(List<GameObject> listGo)
+    {
+        for (int i = 0; i < listGo.Count; i++)
+        {
+            GameObject temp = listGo[i];
+            int randomIndex = Random.Range(i, listGo.Count);
+            listGo[i] = listGo[randomIndex];
+            listGo[randomIndex] = temp;
+        }
+        return listGo;
+    }
+
 
 
     // Kingdoms relations.
