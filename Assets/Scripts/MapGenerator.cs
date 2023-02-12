@@ -28,7 +28,7 @@ public class MapGenerator : MonoBehaviour
     // Animations.
     public bool playEntranceAnim = false;
     public bool playExitAnim = false;
-    private float displayDelay = 2.0f;
+    private float displayDelay = 0.05f;
 
 
     void Start()
@@ -38,11 +38,12 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
+        /*
         foreach (Transform go in mainGroundContainer.GetComponentsInChildren<Transform>(true))
         {
             go.transform.position = new Vector3(0,1*Time.deltaTime,0);
             Debug.Log(go.transform.position);
-        }
+        }*/
     }
 
     /// <summary>
@@ -91,11 +92,11 @@ public class MapGenerator : MonoBehaviour
             for (int z = 0; z < sizeMainArea[1]; z++)
             {
                 GameObject block = listGroundKingdom[Random.Range(0, listGroundKingdom.Count)];
-                currentGround.Add(block);
+                block.SetActive(false);
+
                 Vector3 blockPosition = new Vector3(x, offsetAnimation, z);
 
-                Instantiate(block, blockPosition, Quaternion.identity, mainGroundContainer);
-                block.SetActive(true);
+                currentGround.Add(Instantiate(block, blockPosition, Quaternion.identity, mainGroundContainer));
             }
         }
         Debug.Log("1");
@@ -155,7 +156,7 @@ public class MapGenerator : MonoBehaviour
         playEntranceAnim = true;
 
         // TODO: startcoroutine setactive as true blocks randomly every x ms
-        WaitAndDisplayRandom(listGo);
+        StartCoroutine(WaitAndDisplayRandom(listGo));
 
     }
 
@@ -170,7 +171,7 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     /// <param name="layer">The list of gameobjects.</param>
     /// <returns>Yield with delay.</returns>
-    private void WaitAndDisplayRandom(List<GameObject> listGameobjects)
+    private IEnumerator WaitAndDisplayRandom(List<GameObject> listGameobjects)
     {
 
         List<GameObject> listGameobjectsShuffled = ShuffleGameobjects(listGameobjects);
@@ -178,7 +179,7 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("3");
         foreach (GameObject go in listGameobjectsShuffled)
         {
-            //yield return new WaitForSeconds(0);
+            yield return new WaitForSeconds(displayDelay);
             go.SetActive(true);
             Debug.Log("-> " + go.activeInHierarchy + ": " + go.name);
         }
