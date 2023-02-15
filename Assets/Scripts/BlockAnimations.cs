@@ -55,9 +55,10 @@ public class BlockAnimations : MonoBehaviour
             }
 
         }
+        // TODO : fix update pos even if this condition is false.
         else if (mapGeneratorScript.isGroundLayerBuilt)
         {
-            Debug.Log("---------------------------------------------------->" + mapGeneratorScript.isGroundLayerBuilt);
+            Debug.Log("---->" + mapGeneratorScript.isGroundLayerBuilt);
             if (mapGeneratorScript.playEntranceAnim && !mapGeneratorScript.groundFlag && mapGeneratorScript.coverFlag)
             {
                 float coverY = 1;

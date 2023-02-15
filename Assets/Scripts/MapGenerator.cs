@@ -67,11 +67,13 @@ public class MapGenerator : MonoBehaviour
 
         // Animations display.
         groundFlag = true;
-        EntranceAnimation(currentGround);
+        EntranceAnimation(currentGround, 0.0f);
+
+        // TODO: FIX add delay ? 
 
         Debug.Log("0");
-        //coverFlag = true;
-        EntranceAnimation(currentCover);
+        coverFlag = true;
+        EntranceAnimation(currentCover, 0f);
     }
 
 
@@ -114,7 +116,7 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     private void GenerateMainAreaCover()
     {
-        float offsetAnimation = 1.0f;
+        float offsetAnimation = 2.0f;
 
         for (int x = 0; x < sizeMainArea[0]; x++)
         {
@@ -170,14 +172,14 @@ public class MapGenerator : MonoBehaviour
 
     // Animations
 
-    private void EntranceAnimation(List<GameObject> listGo)
+    private void EntranceAnimation(List<GameObject> listGo, float beforeDelay)
     {
         Debug.Log("2");
         // [BlockAnimations.cs]
         playEntranceAnim = true;
 
         // TODO: startcoroutine setactive as true blocks randomly every x ms
-        StartCoroutine(WaitAndDisplayRandom(listGo));
+        StartCoroutine(WaitAndDisplayRandom(listGo, beforeDelay));
 
     }
 
@@ -192,7 +194,7 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     /// <param name="layer">The list of gameobjects.</param>
     /// <returns>Yield with delay.</returns>
-    private IEnumerator WaitAndDisplayRandom(List<GameObject> listGameobjects)
+    private IEnumerator WaitAndDisplayRandom(List<GameObject> listGameobjects, float timeBeforeDelay)
     {
 
         List<GameObject> listGameobjectsShuffled = ShuffleGameobjects(listGameobjects);
@@ -200,6 +202,7 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("3");
         foreach (GameObject go in listGameobjectsShuffled)
         {
+            yield return new WaitForSeconds(timeBeforeDelay);
             yield return new WaitForSeconds(displayDelay);
             go.SetActive(true);
             Debug.Log("-> " + go.activeInHierarchy + ": " + go.name);
