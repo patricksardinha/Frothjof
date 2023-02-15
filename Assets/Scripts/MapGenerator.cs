@@ -11,6 +11,8 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField]
     private Transform mainGroundContainer;
+    [SerializeField]
+    private Transform mainCoverContainer;
 
     // All gameobjects for the main area and the side area of the game.
     // To find gameobjects related to a specific kingdom, check if the gameobject's name contains the kingdom's name.
@@ -30,6 +32,10 @@ public class MapGenerator : MonoBehaviour
     public bool playExitAnim = false;
     private float displayDelay = 0.05f;
 
+    public bool groundFlag = false;
+    public bool coverFlag = false;
+    public bool isGroundLayerBuilt = false;
+    public bool isCoverLayerBuilt = false;
 
     void Start()
     {
@@ -60,11 +66,12 @@ public class MapGenerator : MonoBehaviour
         GenerateSideArea();
 
         // Animations display.
+        groundFlag = true;
         EntranceAnimation(currentGround);
 
         Debug.Log("0");
-        // Wait for currentGround
-        //EntranceAnimation(currentCover);
+        //coverFlag = true;
+        EntranceAnimation(currentCover);
     }
 
 
@@ -107,7 +114,21 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     private void GenerateMainAreaCover()
     {
+        float offsetAnimation = 1.0f;
 
+        for (int x = 0; x < sizeMainArea[0]; x++)
+        {
+            for (int z = 0; z < sizeMainArea[1]; z++)
+            {
+                GameObject block = listCoverKingdom[Random.Range(0, listCoverKingdom.Count)];
+                block.SetActive(false);
+
+                Vector3 blockPosition = new Vector3(x, offsetAnimation, z);
+
+                currentCover.Add(Instantiate(block, blockPosition, Quaternion.identity, mainCoverContainer));
+            }
+        }
+        Debug.Log("1.2");
     }
 
 
