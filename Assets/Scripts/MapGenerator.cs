@@ -30,7 +30,7 @@ public class MapGenerator : MonoBehaviour
     // Animations.
     public bool playEntranceAnim = false;
     public bool playExitAnim = false;
-    private float displayDelay = 0.025f;
+    private float displayDelay = 0.0025f;
 
     public bool groundFlag = false;
     public bool coverFlag = false;
