@@ -987,6 +987,7 @@ MonoBehaviour:
   - {fileID: 8946157570391169805, guid: 079ba40ca7de5cd44b4c69dacee6c624, type: 3}
   - {fileID: 3502351096874683185, guid: a65ca864a524e2b4d9ce0a65fef4de93, type: 3}
   - {fileID: 6518318230986944404, guid: 568e68821623f584fb08a5e3217154c4, type: 3}
+  emptyCoverPercentage: 95
   currentGround: []
   currentCover: []
   playEntranceAnim: 0
@@ -2534,7 +2535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3605def8b02bd44a9edf76adc09f877, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: -0.20594795
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3605def8b02bd44a9edf76adc09f877, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2542,7 +2543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3605def8b02bd44a9edf76adc09f877, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.97856295
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3605def8b02bd44a9edf76adc09f877, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2554,7 +2555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3605def8b02bd44a9edf76adc09f877, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 270
+      value: 203.77
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3605def8b02bd44a9edf76adc09f877, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

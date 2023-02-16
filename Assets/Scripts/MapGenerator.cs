@@ -24,6 +24,11 @@ public class MapGenerator : MonoBehaviour
     private List<GameObject> listGroundKingdom = new List<GameObject>();
     private List<GameObject> listCoverKingdom = new List<GameObject>();
 
+    private List<int> listRouletteCover = new List<int>();
+    [SerializeField]
+    private int emptyCoverPercentage;
+    private List<float> anglesForBlocks = new List<float> { 0.0f, 90.0f, 180.0f, 270.0f };
+
     public List<GameObject> currentGround = new List<GameObject>();
     public List<GameObject> currentCover = new List<GameObject>();
 
@@ -44,12 +49,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-        /*
-        foreach (Transform go in mainGroundContainer.GetComponentsInChildren<Transform>(true))
-        {
-            go.transform.position = new Vector3(0,1*Time.deltaTime,0);
-            Debug.Log(go.transform.position);
-        }*/
+
     }
 
     /// <summary>
@@ -61,6 +61,8 @@ public class MapGenerator : MonoBehaviour
 
         listGroundKingdom = GetGroundKingdomPrefabs(kingdomName);
         listCoverKingdom = GetCoverKingdomPrefabs(kingdomName);
+
+        listRouletteCover = GenerateRoulette(emptyCoverPercentage, listCoverKingdom.Count);
 
         GenerateMainArea();
         GenerateSideArea();
@@ -124,12 +126,12 @@ public class MapGenerator : MonoBehaviour
         {
             for (int z = 0; z < sizeMainArea[1]; z++)
             {
-                GameObject block = listCoverKingdom[Random.Range(0, listCoverKingdom.Count)];
+                GameObject block = listCoverKingdom[listRouletteCover[Random.Range(0, listRouletteCover.Count)]];
                 block.SetActive(false);
 
                 Vector3 blockPosition = new Vector3(x, offsetAnimation, z);
 
-                currentCover.Add(Instantiate(block, blockPosition, Quaternion.identity, mainCoverContainer));
+                currentCover.Add(Instantiate(block, blockPosition, Quaternion.Euler(0, anglesForBlocks[Random.Range(0, anglesForBlocks.Count)], 0), mainCoverContainer));
             }
         }
         Debug.Log("1.2");
@@ -203,7 +205,10 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("3");
         foreach (GameObject go in listGameobjectsShuffled)
         {
-            yield return new WaitForSeconds(displayDelay);
+            if (!go.name.Contains("EmptyCover"))
+            {
+                yield return new WaitForSeconds(displayDelay);
+            }
             go.SetActive(true);
             Debug.Log("-> " + go.activeInHierarchy + ": " + go.name);
         }
@@ -272,4 +277,44 @@ public class MapGenerator : MonoBehaviour
 
         return listPrefabs;
     }
+
+    /// <summary>
+    /// Generate a roulette list to display a percentage of empty item.
+    /// </summary>
+    /// <param name="percent">The percentage of empty item wanted.</param>
+    /// <param name="nbItemsInList">The current nomber of items in the list.</param>
+    /// <returns></returns>
+    private List<int> GenerateRoulette(int percent, int nbItemsInList)
+    {
+        List<int> listInt = new List<int>();
+
+        int nbItemsNoEmptyItem; 
+        int newNbItemsEmptyItem;
+
+        if (percent >= 100)
+        {
+            nbItemsNoEmptyItem = 0;
+            newNbItemsEmptyItem = 1;
+        } 
+        else
+        {
+            nbItemsNoEmptyItem = nbItemsInList - 1;
+            newNbItemsEmptyItem = nbItemsNoEmptyItem * (percent / (100-percent));
+        }
+
+        int index = 0;
+
+        for (int i = 0; i < (newNbItemsEmptyItem + nbItemsNoEmptyItem); i++)
+        {
+            listInt.Add(index);
+
+            if (i > newNbItemsEmptyItem - 1)
+            {
+                index++;
+            }
+        }
+
+        return listInt;
+    }
+
 }
