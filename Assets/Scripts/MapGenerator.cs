@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviour
     // Animations.
     public bool playEntranceAnim = false;
     public bool playExitAnim = false;
-    private float displayDelay = 0.0025f;
+    private float displayDelay = 0.001f;
 
     public bool groundFlag = false;
     public bool coverFlag = false;
@@ -112,7 +112,6 @@ public class MapGenerator : MonoBehaviour
                 currentGround.Add(Instantiate(block, blockPosition, Quaternion.identity, mainGroundContainer));
             }
         }
-        Debug.Log("1");
     }
 
     /// <summary>
@@ -134,7 +133,6 @@ public class MapGenerator : MonoBehaviour
                 currentCover.Add(Instantiate(block, blockPosition, Quaternion.Euler(0, anglesForBlocks[Random.Range(0, anglesForBlocks.Count)], 0), mainCoverContainer));
             }
         }
-        Debug.Log("1.2");
     }
 
 
@@ -178,12 +176,10 @@ public class MapGenerator : MonoBehaviour
 
     private void EntranceAnimation(List<GameObject> listGo)
     {
-        Debug.Log("2");
         // [BlockAnimations.cs]
         playEntranceAnim = true;
 
         StartCoroutine(WaitAndDisplayRandom(listGo));
-
     }
 
     private void ExitAnimation()
@@ -199,10 +195,8 @@ public class MapGenerator : MonoBehaviour
     /// <returns>Yield with delay.</returns>
     private IEnumerator WaitAndDisplayRandom(List<GameObject> listGameobjects)
     {
-
         List<GameObject> listGameobjectsShuffled = ShuffleGameobjects(listGameobjects);
 
-        Debug.Log("3");
         foreach (GameObject go in listGameobjectsShuffled)
         {
             if (!go.name.Contains("EmptyCover"))
@@ -212,7 +206,6 @@ public class MapGenerator : MonoBehaviour
             go.SetActive(true);
             Debug.Log("-> " + go.activeInHierarchy + ": " + go.name);
         }
-        Debug.Log("4");
     }
 
 
